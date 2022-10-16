@@ -21,7 +21,19 @@ public class GameBoard {
         returns true if a piece placed successfully, or false otherwise
         */
 
-        return true;
+        if((row < 0 || row > 2) || (col < 0 || col > 2)){
+            // move is invalid
+            return false;
+        }
+        else if(gameBoard[row][col] != EMPTY){
+            //spot already taken
+            return false;
+        }
+        else{
+            // move is valid
+            gameBoard[row][col] = X;
+            return true;
+        }
     }
 
     public void drawBoard(){
