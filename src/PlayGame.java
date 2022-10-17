@@ -3,8 +3,14 @@ import java.util.*;
 public class PlayGame {
 
     /*
-    This should hold general game logic like drawing the board and prompting turns
+    This should hold general game logic like prompting turns
     */
+    private static final char X = 'X';
+    private static final char O = 'O';
+    private static final char EMPTY = ' ';
+    private char[][] testBoard = {{X,EMPTY,EMPTY}
+                                 ,{EMPTY,EMPTY,EMPTY}
+                                 ,{X,EMPTY,O}};
 
     GameBoard board = new GameBoard();
     Scanner userInput = new Scanner(System.in);
@@ -15,6 +21,10 @@ public class PlayGame {
     */
         int currentPlayer = 1;
         int gameStatus = 0;
+
+        // HEURISTIC TEST
+        System.out.println("----HEURISTIC TEST---");
+        System.out.printf("Eval = %d\n\n", board.evaluate(testBoard));
 
         System.out.print("Select the AIs opponent:\n[1] Human\n[2] AI\n==> ");
         int opponentChoice = userInput.nextInt();
