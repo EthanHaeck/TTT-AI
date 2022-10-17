@@ -14,6 +14,7 @@ public class PlayGame {
     handle the back and forth turns between players/AIs
     */
         int currentPlayer = 1;
+        int gameStatus = 0;
 
         System.out.print("Select the AIs opponent:\n[1] Human\n[2] AI\n==> ");
         int opponentChoice = userInput.nextInt();
@@ -21,24 +22,44 @@ public class PlayGame {
         //Handle different choices
         if(opponentChoice == 1){ // PLAYER VS AI
             // loop until the win condition is reached, alternating turns
-            while(true){ // <-- CHANGE LATER
-                board.drawBoard();
+            board.drawBoard();
+            while(gameStatus == 0){
                 playerTurn();
+                gameStatus = board.checkWin();
                 board.drawBoard();
+                if(gameStatus != 0){
+                    break;
+                }
                 AITurn(2);
+                gameStatus = board.checkWin();
+                board.drawBoard();
             }
         }
         else{ //AI VS AI
-            while(true){
+            while(gameStatus == 0){
                 board.drawBoard();
                 AITurn(1);
+                gameStatus = board.checkWin();
                 board.drawBoard();
+                if(gameStatus != 0){
+                    break;
+                }
                 AITurn(2);
+                gameStatus = board.checkWin();
             }
         }
 
         // Display game results (Win, Lose, Tie)
-
+        switch(gameStatus){
+            case 1:
+                System.out.println("\n---Player 1 Wins!!---\n");
+                break;
+            case 2:
+                System.out.println("\n---Player 2 Wins!!---\n");
+                break;
+            default:
+                System.out.println("\n---Tie Game!!---\n");
+        }
 
     }
 
@@ -68,9 +89,14 @@ public class PlayGame {
     }
 
     private void AITurn(int playerNum){
+        int nodesExpanded = 0;
+
         System.out.printf("***Player %d's turn!***\n", playerNum);
 
+        //make the move
+        board.placeAIPiece();
 
+        System.out.printf("Nodes expanded = %d\n", nodesExpanded);
 
     }
 
