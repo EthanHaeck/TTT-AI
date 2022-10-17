@@ -29,7 +29,13 @@ public class PlayGame {
         System.out.print("Select the AIs opponent:\n[1] Human\n[2] AI\n==> ");
         int opponentChoice = userInput.nextInt();
 
-        //Handle different choices
+        //input validation
+        while(opponentChoice < 1 || opponentChoice > 2){
+            System.out.print("Enter a valid number: ");
+            opponentChoice = userInput.nextInt();
+        }
+
+        //Handle different opponent choices
         if(opponentChoice == 1){ // PLAYER VS AI
             // loop until the win condition is reached, alternating turns
             board.drawBoard();
