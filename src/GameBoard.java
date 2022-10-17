@@ -8,6 +8,11 @@ public class GameBoard {
                                  ,{EMPTY,EMPTY,EMPTY}
                                  ,{EMPTY,EMPTY,EMPTY}};
 
+    //TODO:
+    // Create Function to Clone Board
+    // MiniMax function
+    // Function to build game tree
+
 
     public boolean tryPlacePiece(int row, int col){
         /*
@@ -110,6 +115,7 @@ public class GameBoard {
             selectedRow = random.nextInt(3);
             selectedCol = random.nextInt(3);
         }
+        // ^^^ JUST FOR TESTING ^^^
 
         //place the piece
         gameBoard[selectedRow][selectedCol] = O;
@@ -118,10 +124,188 @@ public class GameBoard {
         System.out.printf("%d, %d\n", selectedRow, selectedCol);
     }
 
-    private void evaluate(){
+    public int evaluate(char[][] board){
         //Returns higher numbers if player 1 is at an advantage
         //or lower numbers if player 2 is at an advantage
+        // utilizes a heuristic function to determine who has the advantage
+        int result = 0;
+        int row1 = 0;
+        int row2 = 0;
+        int row3 = 0;
+        int col1 = 0;
+        int col2 = 0;
+        int col3 = 0;
+        int diag1 = 0;
+        int diag2 = 0;
+        int numEmpty = 0;
+        int numX = 0;
+        int numO = 0;
 
+        //calculate rows and columns
+
+        //---row1---
+        for(int i = 0; i <= 2; i++){
+            if(board[0][i] == X){
+                numX++;
+            }
+            if(board[0][i] == O){
+                numO++;
+            }
+        }
+        if(numX > 0 && numO == 0){
+            row1 = 1;
+        }
+        else if(numO > 0 && numX == 0){
+            row1 = -1;
+        }
+
+        numX = 0;
+        numO = 0;
+        // ---row2---
+        for(int i = 0; i <= 2; i++){
+            if(board[1][i] == X){
+                numX++;
+            }
+            if(board[1][i] == O){
+                numO++;
+            }
+        }
+        if(numX > 0 && numO == 0){
+            row2 = 1;
+        }
+        else if(numO > 0 && numX == 0){
+            row2 = -1;
+        }
+
+        numX = 0;
+        numO = 0;
+        // ---row3---
+        for(int i = 0; i <= 2; i++){
+            if(board[2][i] == X){
+                numX++;
+            }
+            if(board[2][i] == O){
+                numO++;
+            }
+        }
+        if(numX > 0 && numO == 0){
+            row3 = 1;
+        }
+        else if(numO > 0 && numX == 0){
+            row3 = -1;
+        }
+
+        numX = 0;
+        numO = 0;
+        // ---col1---
+        for(int i = 0; i <= 2; i++){
+            if(board[i][0] == X){
+                numX++;
+            }
+            if(board[i][0] == O){
+                numO++;
+            }
+        }
+        if(numX > 0 && numO == 0){
+            col1 = 1;
+        }
+        else if(numO > 0 && numX == 0){
+            col1 = -1;
+        }
+
+        numX = 0;
+        numO = 0;
+        // ---col2---
+        for(int i = 0; i <= 2; i++){
+            if(board[i][1] == X){
+                numX++;
+            }
+            if(board[i][1] == O){
+                numO++;
+            }
+        }
+        if(numX > 0 && numO == 0){
+            col2 = 1;
+        }
+        else if(numO > 0 && numX == 0){
+            col2 = -1;
+        }
+
+        numX = 0;
+        numO = 0;
+        // ---col3---
+        for(int i = 0; i <= 2; i++){
+            if(board[i][2] == X){
+                numX++;
+            }
+            if(board[i][2] == O){
+                numO++;
+            }
+        }
+        if(numX > 0 && numO == 0){
+            col3 = 1;
+        }
+        else if(numO > 0 && numX == 0){
+            col3 = -1;
+        }
+
+
+        //calculate diagonals
+        numX = 0;
+        numO = 0;
+        //---diag1---
+        for(int i = 0; i <= 2; i++){ //top left, middle, bottom right
+            if(board[i][i] == X){
+                numX++;
+            }
+            if(board[i][i] == O){
+                numO++;
+            }
+        }
+        if(numX > 0 && numO == 0){
+            diag1 = 1;
+        }
+        else if(numO > 0 && numX == 0){
+            diag1 = -1;
+        }
+
+
+        numX = 0;
+        numO = 0;
+        //---diag2---
+        if(board[0][2] == X){ //top right
+            numX++;
+        }
+        if(board[0][2] == O){
+            numO++;
+        }
+
+        if(board[1][1] == X){ //middle
+            numX++;
+        }
+        if(board[1][1] == O){
+            numO++;
+        }
+
+        if(board[2][0] == X){ //bottom left
+            numX++;
+        }
+        if(board[2][0] == O){
+            numO++;
+        }
+
+        if(numX > 0 && numO == 0){
+            diag2 = 1;
+        }
+        else if(numO > 0 && numX == 0){
+            diag2 = -1;
+        }
+
+
+        //heurisitc
+        result = row1 + row2 + row3 + col1 + col2 + col3 + diag1 + diag2;
+
+        return result;
     }
 
 }
