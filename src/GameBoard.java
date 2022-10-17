@@ -53,7 +53,7 @@ public class GameBoard {
         }
 
         //rows and columns
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i <= 2; i++){
             if(gameBoard[i][0] == 'X' & gameBoard[i][1] == 'X' & gameBoard[i][2] == 'X'){
                 return 1;
             }
@@ -69,8 +69,8 @@ public class GameBoard {
         }
 
         //check if moves can still be made
-        for(int i = 0; i < 2; i++){
-            for(int j = 0; j < 2; j++){
+        for(int i = 0; i <= 2; i++){
+            for(int j = 0; j <= 2; j++){
                 if(gameBoard[i][j] == EMPTY){
                     return 0;
                 }
