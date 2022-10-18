@@ -94,7 +94,7 @@ public class PlayGame {
 
         // --- OPTIMIZE LATER ---
         // check validity and check move
-        while(!board.tryPlacePiece(selectedRow, selectedCol)){
+        while(!board.tryPlacePiece(selectedRow, selectedCol, 1)){
             System.out.println("---Move is invalid, try again!---");
             System.out.print("Enter row [0 to 2]: ");
             selectedRow = userInput.nextInt();
@@ -106,11 +106,29 @@ public class PlayGame {
 
     private void AITurn(int playerNum){
         int nodesExpanded = 0;
+        int selectedRow;
+        int selectedCol;
 
         System.out.printf("***Player %d's turn!***\n", playerNum);
 
-        //make the move
-        board.placeAIPiece();
+        // TEMPORARY - JUST FOR TESTING
+        Random random = new Random();
+        selectedRow = random.nextInt(3);
+        selectedCol = random.nextInt(3);
+        while(!board.tryPlacePiece(selectedRow, selectedCol, 2)){
+            selectedRow = random.nextInt(3);
+            selectedCol = random.nextInt(3);
+        }
+        //print the move
+        System.out.printf("%d, %d\n", selectedRow, selectedCol);
+        // ^^^ JUST FOR TESTING ^^^
+
+        //expand the game tree to specified depth
+
+        //evaluate each node and assign a value
+
+        //run MiniMax on the game tree and decide best move
+
 
         System.out.printf("Nodes expanded = %d\n", nodesExpanded);
 

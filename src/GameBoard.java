@@ -10,16 +10,22 @@ public class GameBoard {
 
     //TODO:
     // Create Function to Clone Board
-    // MiniMax function
-    // Function to build game tree
 
 
-    public boolean tryPlacePiece(int row, int col){
+    public boolean tryPlacePiece(int row, int col, int playerNum){
         /*
         checks that the given coords are inbounds and not already occupied
         and places a piece (X for player 1, O for player 2)
         returns true if a piece placed successfully, or false otherwise
         */
+        char symbol;
+
+        if(playerNum == 1){
+            symbol = X;
+        }
+        else{
+            symbol = O;
+        }
 
         if((row < 0 || row > 2) || (col < 0 || col > 2)){
             // move is invalid
@@ -31,7 +37,7 @@ public class GameBoard {
         }
         else{
             // move is valid
-            gameBoard[row][col] = X;
+            gameBoard[row][col] = symbol;
             return true;
         }
     }
@@ -97,32 +103,6 @@ public class GameBoard {
         System.out.printf(" %c | %c | %c \n", gameBoard[2][0], gameBoard[2][1], gameBoard[2][2]);
     }
 
-    public void placeAIPiece(){
-        // places the AI's move on the board
-        int selectedRow;
-        int selectedCol;
-
-        //evaluate the current board
-
-        //choose a position
-
-
-        // TEMPORARY - JUST FOR TESTING
-        Random random = new Random();
-        selectedRow = random.nextInt(3);
-        selectedCol = random.nextInt(3);
-        while(gameBoard[selectedRow][selectedCol] != EMPTY){
-            selectedRow = random.nextInt(3);
-            selectedCol = random.nextInt(3);
-        }
-        // ^^^ JUST FOR TESTING ^^^
-
-        //place the piece
-        gameBoard[selectedRow][selectedCol] = O;
-
-        //print the move
-        System.out.printf("%d, %d\n", selectedRow, selectedCol);
-    }
 
     public int evaluate(char[][] board){
         //Returns higher numbers if player 1 is at an advantage
