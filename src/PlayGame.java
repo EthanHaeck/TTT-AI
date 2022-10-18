@@ -108,6 +108,7 @@ public class PlayGame {
         int nodesExpanded = 0;
         int selectedRow;
         int selectedCol;
+        GameTreeNode root = new GameTreeNode();
 
         System.out.printf("***Player %d's turn!***\n", playerNum);
 
