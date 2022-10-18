@@ -115,7 +115,7 @@ public class PlayGame {
         Random random = new Random();
         selectedRow = random.nextInt(3);
         selectedCol = random.nextInt(3);
-        while(!board.tryPlacePiece(selectedRow, selectedCol, 2)){
+        while(!board.tryPlacePiece(selectedRow, selectedCol, playerNum)){
             selectedRow = random.nextInt(3);
             selectedCol = random.nextInt(3);
         }
