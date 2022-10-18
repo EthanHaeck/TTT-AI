@@ -6,6 +6,10 @@ public class GameTreeNode {
     private int minimaxValue;
     private static final int MAX_DEPTH = 3;
 
+    //TODO:
+    // MiniMax function
+    // Function to build game tree
+
     public void expandChildren(int depthLimit){
         //Expands game tree to the given depth limit
 
