@@ -108,7 +108,7 @@ public class PlayGame {
         int nodesExpanded = 0;
         int selectedRow;
         int selectedCol;
-        GameTreeNode root = new GameTreeNode();
+        GameTreeNode root;
 
         System.out.printf("***Player %d's turn!***\n", playerNum);
 
@@ -124,9 +124,14 @@ public class PlayGame {
         System.out.printf("%d, %d\n", selectedRow, selectedCol);
         // ^^^ JUST FOR TESTING ^^^
 
-        //expand the game tree to specified depth
+        //clone the board and expand
+        GameBoard copy = new GameBoard();
+        copy = board.clone();
+        root = new GameTreeNode(copy);
+        root.expandChildren(3);
 
         //evaluate each node and assign a value
+        root.evaluateNodes();
 
         //run MiniMax on the game tree and decide best move
 
