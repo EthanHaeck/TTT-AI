@@ -103,7 +103,6 @@ public class GameBoard {
         System.out.printf(" %c | %c | %c \n", gameBoard[2][0], gameBoard[2][1], gameBoard[2][2]);
     }
 
-
     public int evaluate(char[][] board){
         //Returns higher numbers if player 1 is at an advantage
         //or lower numbers if player 2 is at an advantage
@@ -286,6 +285,12 @@ public class GameBoard {
         result = row1 + row2 + row3 + col1 + col2 + col3 + diag1 + diag2;
 
         return result;
+    }
+
+    public GameBoard clone(){
+        //returns a copy of the given game board
+
+        return null;
     }
 
 }
