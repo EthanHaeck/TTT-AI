@@ -8,6 +8,8 @@ public class GameBoard {
                                  ,{EMPTY,EMPTY,EMPTY}
                                  ,{EMPTY,EMPTY,EMPTY}};
 
+    public int evalValue = 0;
+
     //TODO:
     // Create Function to Clone Board
 
@@ -103,7 +105,7 @@ public class GameBoard {
         System.out.printf(" %c | %c | %c \n", gameBoard[2][0], gameBoard[2][1], gameBoard[2][2]);
     }
 
-    public int evaluate(char[][] board){
+    public void evaluate(){
         //Returns higher numbers if player 1 is at an advantage
         //or lower numbers if player 2 is at an advantage
         // utilizes a heuristic function to determine who has the advantage
@@ -124,10 +126,10 @@ public class GameBoard {
 
         //---row1---
         for(int i = 0; i <= 2; i++){
-            if(board[0][i] == X){
+            if(gameBoard[0][i] == X){
                 numX++;
             }
-            if(board[0][i] == O){
+            if(gameBoard[0][i] == O){
                 numO++;
             }
         }
@@ -142,10 +144,10 @@ public class GameBoard {
         numO = 0;
         // ---row2---
         for(int i = 0; i <= 2; i++){
-            if(board[1][i] == X){
+            if(gameBoard[1][i] == X){
                 numX++;
             }
-            if(board[1][i] == O){
+            if(gameBoard[1][i] == O){
                 numO++;
             }
         }
@@ -160,10 +162,10 @@ public class GameBoard {
         numO = 0;
         // ---row3---
         for(int i = 0; i <= 2; i++){
-            if(board[2][i] == X){
+            if(gameBoard[2][i] == X){
                 numX++;
             }
-            if(board[2][i] == O){
+            if(gameBoard[2][i] == O){
                 numO++;
             }
         }
@@ -178,10 +180,10 @@ public class GameBoard {
         numO = 0;
         // ---col1---
         for(int i = 0; i <= 2; i++){
-            if(board[i][0] == X){
+            if(gameBoard[i][0] == X){
                 numX++;
             }
-            if(board[i][0] == O){
+            if(gameBoard[i][0] == O){
                 numO++;
             }
         }
@@ -196,10 +198,10 @@ public class GameBoard {
         numO = 0;
         // ---col2---
         for(int i = 0; i <= 2; i++){
-            if(board[i][1] == X){
+            if(gameBoard[i][1] == X){
                 numX++;
             }
-            if(board[i][1] == O){
+            if(gameBoard[i][1] == O){
                 numO++;
             }
         }
@@ -214,10 +216,10 @@ public class GameBoard {
         numO = 0;
         // ---col3---
         for(int i = 0; i <= 2; i++){
-            if(board[i][2] == X){
+            if(gameBoard[i][2] == X){
                 numX++;
             }
-            if(board[i][2] == O){
+            if(gameBoard[i][2] == O){
                 numO++;
             }
         }
@@ -234,10 +236,10 @@ public class GameBoard {
         numO = 0;
         //---diag1---
         for(int i = 0; i <= 2; i++){ //top left, middle, bottom right
-            if(board[i][i] == X){
+            if(gameBoard[i][i] == X){
                 numX++;
             }
-            if(board[i][i] == O){
+            if(gameBoard[i][i] == O){
                 numO++;
             }
         }
@@ -252,24 +254,24 @@ public class GameBoard {
         numX = 0;
         numO = 0;
         //---diag2---
-        if(board[0][2] == X){ //top right
+        if(gameBoard[0][2] == X){ //top right
             numX++;
         }
-        if(board[0][2] == O){
+        if(gameBoard[0][2] == O){
             numO++;
         }
 
-        if(board[1][1] == X){ //middle
+        if(gameBoard[1][1] == X){ //middle
             numX++;
         }
-        if(board[1][1] == O){
+        if(gameBoard[1][1] == O){
             numO++;
         }
 
-        if(board[2][0] == X){ //bottom left
+        if(gameBoard[2][0] == X){ //bottom left
             numX++;
         }
-        if(board[2][0] == O){
+        if(gameBoard[2][0] == O){
             numO++;
         }
 
@@ -284,7 +286,13 @@ public class GameBoard {
         //heurisitc
         result = row1 + row2 + row3 + col1 + col2 + col3 + diag1 + diag2;
 
-        return result;
+        //set local gameBoard value
+        evalValue = result;
+
+    }
+
+    public char getPosition(int row, int col){
+        return gameBoard[row][col];
     }
 
     public GameBoard clone(){

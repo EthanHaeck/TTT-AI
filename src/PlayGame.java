@@ -8,9 +8,9 @@ public class PlayGame {
     private static final char X = 'X';
     private static final char O = 'O';
     private static final char EMPTY = ' ';
-    private char[][] testBoard = {{X,EMPTY,EMPTY}
-                                 ,{EMPTY,EMPTY,EMPTY}
-                                 ,{X,EMPTY,O}};
+    private char[][] testBoard = {{EMPTY,O,EMPTY}
+                                 ,{EMPTY,X,O}
+                                 ,{EMPTY,EMPTY,X}};
 
     GameBoard board = new GameBoard();
     Scanner userInput = new Scanner(System.in);
@@ -23,8 +23,9 @@ public class PlayGame {
         int gameStatus = 0;
 
         // HEURISTIC TEST
-        System.out.println("----HEURISTIC TEST---");
-        System.out.printf("Eval = %d\n\n", board.evaluate(testBoard));
+//        System.out.println("----HEURISTIC TEST---");
+//        board.evaluate(testBoard);
+//        System.out.printf("Eval = %d\n\n", board.evalValue);
 
         System.out.print("Select the AIs opponent:\n[1] Human\n[2] AI\n==> ");
         int opponentChoice = userInput.nextInt();
@@ -40,6 +41,10 @@ public class PlayGame {
             // loop until the win condition is reached, alternating turns
             board.drawBoard();
             while(gameStatus == 0){
+
+                board.evaluate();
+                System.out.printf("\nEval = %d\n\n", board.evalValue);
+
                 playerTurn();
                 gameStatus = board.checkWin();
                 board.drawBoard();
@@ -124,14 +129,13 @@ public class PlayGame {
         System.out.printf("%d, %d\n", selectedRow, selectedCol);
         // ^^^ JUST FOR TESTING ^^^
 
-        //clone the board and expand
-        GameBoard copy = new GameBoard();
-        copy = board.clone();
+        //clone the board
+        GameBoard copy = board.clone();
         root = new GameTreeNode(copy);
-        root.expandChildren(3);
 
-        //evaluate each node and assign a value
-        root.evaluateNodes();
+        //expand the tree and evaluate each node
+//        root.expandChildren(3);
+
 
         //run MiniMax on the game tree and decide best move
 
