@@ -22,9 +22,22 @@ public class GameTreeNode {
         //Expands game tree to the given depth limit
         //root is 0, so depth 3 is 3 moves past
         //given the current board, generate the children to a depth of 3
+        Stack<GameTreeNode> stack = new Stack<>();
+        ArrayList<GameTreeNode> visited = new ArrayList<>();
+        int currentDepth = 0;
+
+        // add all children of the current node to the stack
+        stack.addAll(children);
+
+        // iterate through each child
+        while(!stack.isEmpty()){
+            //do this three times, each iteration on the newly created children
+            if(currentDepth <= depthLimit){
+                GameTreeNode current = stack.pop();
 
 
-        //vvv  do this three times, each iteration on the newly created children vvv
+            }
+        }
 
         //look for an open position to play
         for(int i = 0; i <= 2; i++){
@@ -43,6 +56,28 @@ public class GameTreeNode {
             }
         }
 
+    }
+
+    private void createChildren(GameTreeNode parentNode){
+        //given a board, create children
+        // a child is a possible move that can be made on the parent board
+
+        //look for an open position to play
+        for(int i = 0; i <= 2; i++){
+            for(int j = 0; j <= 2; j++){
+                if(parentNode.gameBoard.getPosition(i, j) == EMPTY){
+                    //clone the board
+                    GameBoard childBoard = parentNode.gameBoard.clone();
+                    //make the move on the cloned board
+                    childBoard.tryPlacePiece(i, j, playerNum);
+                    //add the cloned board to list of children
+                    GameTreeNode childNode = new GameTreeNode(childBoard);
+                    childNode.gameBoard.evaluate();
+                    parentNode.children.add(childNode);
+
+                }
+            }
+        }
     }
 
     public void evaluateNodes(GameTreeNode child){
