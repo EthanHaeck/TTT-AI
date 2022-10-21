@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class GameTreeNode {
-    private List<GameTreeNode> children;
+    private List<GameTreeNode> children = new ArrayList<>();;
     private GameBoard gameBoard;
     private int minimaxValue;
     private static final int MAX_DEPTH = 3;
@@ -21,14 +21,13 @@ public class GameTreeNode {
         //Expands game tree to the given depth limit
         //root is 0, so depth 3 is 3 moves past
         //given the current board, generate the children to a depth of 3
-        Stack<GameTreeNode> stack = new Stack<>();
-        ArrayList<GameTreeNode> visited = new ArrayList<>();
         int currentDepth = 1;
 
         //create children for the parent node
         for(int i = 0; i <= 2; i++){
             for(int j = 0; j <= 2; j++) {
                 if(gameBoard.getPosition(i, j) == EMPTY) {
+                    System.out.println("Creating first row of children");
                     //clone the board
                     GameBoard childBoard = gameBoard.clone();
                     //make the move on the cloned board
@@ -40,7 +39,7 @@ public class GameTreeNode {
 
                     //run MiniMax on the child
 //                    childNode.runMiniMax(true);
-                    childNode.createChildren(1, initialPlayerNum);
+                    childNode.createChildren(currentDepth, initialPlayerNum);
                 }
             }
         }
@@ -53,7 +52,7 @@ public class GameTreeNode {
         // a child is a possible move that can be made on the parent board
 
         //don't create any children if the depth limit has been hit
-        if(currentDepth >= MAX_DEPTH){
+        if(currentDepth > MAX_DEPTH){
             return;
         }
 
@@ -70,10 +69,11 @@ public class GameTreeNode {
         for(int i = 0; i <= 2; i++){
             for(int j = 0; j <= 2; j++){
                 if(gameBoard.getPosition(i, j) == EMPTY){
+//                    System.out.printf("Creating row %d of children\n", currentDepth);
                     //clone the board
                     GameBoard childBoard = gameBoard.clone();
                     //make the move on the cloned board
-                    childBoard.tryPlacePiece(i, j, playerNum);
+                    childBoard.tryPlacePiece(i, j, nextPlayerNum);
                     //add the cloned board to list of children
                     GameTreeNode childNode = new GameTreeNode(childBoard);
                     childNode.gameBoard.evaluate();
@@ -106,10 +106,7 @@ public class GameTreeNode {
             return this;
         }
 
-        //run MiniMax on each child
-        for(int i = 0; i < children.size(); i++){
-            children.get(i).runMiniMax(!max);
-        }
+
 
         if(max){
             bestVal = Integer.MIN_VALUE;
@@ -120,6 +117,10 @@ public class GameTreeNode {
                     bestVal = children.get(i).minimaxValue;
                     bestNode = children.get(i);
                 }
+
+                // choose between two nodes
+                bestVal = Math.max(bestVal, runMiniMax(!max).minimaxValue);
+
             }
         }
         else{

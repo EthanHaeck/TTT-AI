@@ -122,10 +122,10 @@ public class PlayGame {
         Random random = new Random();
         selectedRow = random.nextInt(3);
         selectedCol = random.nextInt(3);
-        while(!board.tryPlacePiece(selectedRow, selectedCol, playerNum)){
-            selectedRow = random.nextInt(3);
-            selectedCol = random.nextInt(3);
-        }
+//        while(!board.tryPlacePiece(selectedRow, selectedCol, playerNum)){
+//            selectedRow = random.nextInt(3);
+//            selectedCol = random.nextInt(3);
+//        }
         //print the move
         System.out.printf("%d, %d\n", selectedRow, selectedCol);
         // ^^^ JUST FOR TESTING ^^^
@@ -139,7 +139,7 @@ public class PlayGame {
         root.expandChildren(playerNum);
 
         //run MiniMax on the game tree and decide best move
-        bestNode = root.runMiniMax(true);
+//        bestNode = root.runMiniMax(true);
 
         System.out.printf("Nodes expanded = %d\n", nodesExpanded);
 
