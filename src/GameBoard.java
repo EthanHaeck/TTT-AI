@@ -296,9 +296,14 @@ public class GameBoard {
     }
 
     public GameBoard clone(){
-        //returns a copy of the given game board
-
-        return null;
+        //returns a copy of the given game board :)
+        GameBoard newGameBoard = new GameBoard();
+        for (int i = 0; i <= 2; i++){
+            for (int j = 0; j <= 2; j++){
+                newGameBoard.gameBoard[i][j] = gameBoard[i][j];
+            }
+        }
+        return newGameBoard;
     }
 
 }
