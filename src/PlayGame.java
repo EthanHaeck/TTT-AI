@@ -135,8 +135,7 @@ public class PlayGame {
         root = new GameTreeNode(copy);
 
         //expand the tree and evaluate each node
-        //player number should be for other player
-        root.expandChildren(playerNum);
+        nodesExpanded = root.expandChildren(playerNum);
 
         //run MiniMax on the game tree and decide best move
 //        bestNode = root.runMiniMax(true);

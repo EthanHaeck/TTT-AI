@@ -17,11 +17,12 @@ public class GameTreeNode {
         this.gameBoard = root;
     }
 
-    public void expandChildren(int initialPlayerNum){
+    public int expandChildren(int initialPlayerNum){
         //Expands game tree to the given depth limit
         //root is 0, so depth 3 is 3 moves past
         //given the current board, generate the children to a depth of 3
         int currentDepth = 1;
+        int nodesExpanded = 0;
 
         //create children for the parent node
         for(int i = 0; i <= 2; i++){
@@ -37,24 +38,32 @@ public class GameTreeNode {
                     childNode.gameBoard.evaluate();
                     children.add(childNode);
 
+                    //create children of the child (grandchildren)
+                    nodesExpanded += childNode.createChildren(currentDepth, initialPlayerNum);
+
                     //run MiniMax on the child
-//                    childNode.runMiniMax(true);
-                    childNode.createChildren(currentDepth, initialPlayerNum);
+                    //childNode.runMiniMax(true);
                 }
             }
         }
 
+        return nodesExpanded;
+
 
     }
 
-    private void createChildren(int currentDepth, int playerNum){
+    private int createChildren(int currentDepth, int playerNum){
         //create children based off this node's board
         // a child is a possible move that can be made on the parent board
 
         //don't create any children if the depth limit has been hit
         if(currentDepth > MAX_DEPTH){
-            return;
+            return 0;
         }
+
+        //counts the current node as being expanded
+        //generated children have not been expanded yet
+        int expandedNodes = 1;
 
         //to swap between placing 'X' and 'O'
         int nextPlayerNum;
@@ -80,14 +89,15 @@ public class GameTreeNode {
                     children.add(childNode);
 
                     //recursive call to make more children
-                    childNode.createChildren(currentDepth+1, nextPlayerNum);
+                    expandedNodes += childNode.createChildren(currentDepth+1, nextPlayerNum);
 
 
                 }
             }
         }
 
-        //maybe return a value to show nodes expanded
+        //return a value to show nodes expanded
+        return expandedNodes;
 
     }
 
