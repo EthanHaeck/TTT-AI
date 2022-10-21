@@ -25,7 +25,7 @@ public class GameTreeNode {
         ArrayList<GameTreeNode> visited = new ArrayList<>();
         int currentDepth = 1;
 
-        //create the rest of the tree
+        //create children for the parent node
         for(int i = 0; i <= 2; i++){
             for(int j = 0; j <= 2; j++) {
                 if(gameBoard.getPosition(i, j) == EMPTY) {
@@ -39,7 +39,8 @@ public class GameTreeNode {
                     children.add(childNode);
 
                     //run MiniMax on the child
-                    childNode.runMiniMax(true, 1);
+//                    childNode.runMiniMax(true);
+                    childNode.createChildren(1, initialPlayerNum);
                 }
             }
         }
@@ -96,16 +97,27 @@ public class GameTreeNode {
         //max is true if the MAX result is desired
         //max is false if the MIN result is desired
         //Returns the child node that the maximizes or minimizes the result
-        GameTreeNode bestNode;
+        GameTreeNode bestNode = this;
         int bestVal;
+
+        //recurive case
+        if(children.isEmpty()){
+            minimaxValue = gameBoard.evalValue;
+            return this;
+        }
+
+        //run MiniMax on each child
+        for(int i = 0; i < children.size(); i++){
+            children.get(i).runMiniMax(!max);
+        }
 
         if(max){
             bestVal = Integer.MIN_VALUE;
 
-            //find the child with the best evaluation
+            //find the child with the best value
             for(int i = 0; i < children.size(); i++){
-                if(children.get(i).gameBoard.evalValue > bestVal){
-                    bestVal = children.get(i).gameBoard.evalValue;
+                if(children.get(i).minimaxValue > bestVal){
+                    bestVal = children.get(i).minimaxValue;
                     bestNode = children.get(i);
                 }
             }
@@ -113,15 +125,14 @@ public class GameTreeNode {
         else{
             bestVal = Integer.MAX_VALUE;
 
-            //find the child with the worsr evaluation
+            //find the child with the worst evaluation
             for(int i = 0; i < children.size(); i++){
-                if(children.get(i).gameBoard.evalValue < bestVal){
-                    bestVal = children.get(i).gameBoard.evalValue;
+                if(children.get(i).minimaxValue < bestVal){
+                    bestVal = children.get(i).minimaxValue;
                     bestNode = children.get(i);
                 }
             }
         }
-
 
         return bestNode;
     }
