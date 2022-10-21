@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class GameTreeNode {
-    private List<GameTreeNode> children = new ArrayList<>();;
+    public List<GameTreeNode> children = new ArrayList<>();;
     private GameBoard gameBoard;
-    private int minimaxValue;
+    public int minimaxValue;
     private static final int MAX_DEPTH = 3;
     private static final char X = 'X';
     private static final char O = 'O';
@@ -41,8 +41,8 @@ public class GameTreeNode {
                     //create children of the child (grandchildren)
                     nodesExpanded += childNode.createChildren(currentDepth, initialPlayerNum);
 
-                    //run MiniMax on the child
-                    //childNode.runMiniMax(true);
+                    //run MiniMax on each child
+                    childNode.minimaxValue = childNode.runMiniMax(true).minimaxValue;
                 }
             }
         }
@@ -113,35 +113,34 @@ public class GameTreeNode {
         //recurive case
         if(children.isEmpty()){
             minimaxValue = gameBoard.evalValue;
-            return this;
+            return bestNode;
         }
 
 
-
-        if(max){
+        if(max){ //finding highest value
             bestVal = Integer.MIN_VALUE;
 
             //find the child with the best value
             for(int i = 0; i < children.size(); i++){
-                if(children.get(i).minimaxValue > bestVal){
-                    bestVal = children.get(i).minimaxValue;
-                    bestNode = children.get(i);
-                }
 
                 // choose between two nodes
-                bestVal = Math.max(bestVal, runMiniMax(!max).minimaxValue);
+                bestVal = Math.max(bestVal, children.get(i).runMiniMax(!max).minimaxValue);
 
+                //set MiniMax value
+                minimaxValue = bestVal;
             }
         }
-        else{
+        else{ //finding smallest value
             bestVal = Integer.MAX_VALUE;
 
             //find the child with the worst evaluation
             for(int i = 0; i < children.size(); i++){
-                if(children.get(i).minimaxValue < bestVal){
-                    bestVal = children.get(i).minimaxValue;
-                    bestNode = children.get(i);
-                }
+
+                // choose between two nodes
+                bestVal = Math.min(bestVal, children.get(i).runMiniMax(!max).minimaxValue);
+
+                //set MiniMax value
+                minimaxValue = bestVal;
             }
         }
 

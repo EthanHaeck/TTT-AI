@@ -113,6 +113,8 @@ public class PlayGame {
         int nodesExpanded = 0;
         int selectedRow;
         int selectedCol;
+        int bestChild = 0;
+        int bestVal;
         GameTreeNode root;
         GameTreeNode bestNode;
 
@@ -137,8 +139,21 @@ public class PlayGame {
         //expand the tree and evaluate each node
         nodesExpanded = root.expandChildren(playerNum);
 
-        //run MiniMax on the game tree and decide best move
-//        bestNode = root.runMiniMax(true);
+        //choose best child node based on MiniMax value
+        bestVal = root.children.get(0).minimaxValue;
+        for(int i = 1; i < root.children.size(); i++){
+            if(root.children.get(i).minimaxValue > bestVal){
+                bestChild = i;
+            }
+        }
+
+        //compare child board to current board to determine move
+
+        //make the move
+
+
+//        System.out.printf("Best move = %d\n", bestNode.minimaxValue);
+
 
         System.out.printf("Nodes expanded = %d\n", nodesExpanded);
 
