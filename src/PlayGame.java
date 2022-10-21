@@ -114,6 +114,7 @@ public class PlayGame {
         int selectedRow;
         int selectedCol;
         GameTreeNode root;
+        GameTreeNode bestNode;
 
         System.out.printf("***Player %d's turn!***\n", playerNum);
 
@@ -134,11 +135,11 @@ public class PlayGame {
         root = new GameTreeNode(copy);
 
         //expand the tree and evaluate each node
-//        root.expandChildren(3);
-
+        //player number should be for other player
+        root.expandChildren(playerNum);
 
         //run MiniMax on the game tree and decide best move
-
+        bestNode = root.runMiniMax(true);
 
         System.out.printf("Nodes expanded = %d\n", nodesExpanded);
 
