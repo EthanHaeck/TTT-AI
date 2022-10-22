@@ -110,26 +110,27 @@ public class PlayGame {
     }
 
     private void AITurn(int playerNum){
-        int nodesExpanded = 0;
+        int nodesExpanded;
         int selectedRow;
         int selectedCol;
         int bestChild = 0;
         int bestVal;
+        int[] move;
         GameTreeNode root;
         GameTreeNode bestNode;
 
         System.out.printf("***Player %d's turn!***\n", playerNum);
 
         // TEMPORARY - JUST FOR TESTING
-        Random random = new Random();
-        selectedRow = random.nextInt(3);
-        selectedCol = random.nextInt(3);
+//        Random random = new Random();
+//        selectedRow = random.nextInt(3);
+//        selectedCol = random.nextInt(3);
 //        while(!board.tryPlacePiece(selectedRow, selectedCol, playerNum)){
 //            selectedRow = random.nextInt(3);
 //            selectedCol = random.nextInt(3);
 //        }
         //print the move
-        System.out.printf("%d, %d\n", selectedRow, selectedCol);
+//        System.out.printf("%d, %d\n", selectedRow, selectedCol);
         // ^^^ JUST FOR TESTING ^^^
 
         //clone the board
@@ -139,22 +140,33 @@ public class PlayGame {
         //expand the tree and evaluate each node
         nodesExpanded = root.expandChildren(playerNum);
 
-        //choose best child node based on MiniMax value
-        bestVal = root.children.get(0).minimaxValue;
-        for(int i = 1; i < root.children.size(); i++){
-            if(root.children.get(i).minimaxValue > bestVal){
-                bestChild = i;
+        if(playerNum == 1){
+            //choose best child node based on MiniMax value
+            bestVal = root.children.get(0).minimaxValue;
+            for(int i = 1; i < root.children.size(); i++){
+                if(root.children.get(i).minimaxValue > bestVal){
+                    bestChild = i;
+                }
+            }
+        }
+        else{
+            //choose worst child node based on MiniMax value
+            bestVal = root.children.get(0).minimaxValue;
+            for(int i = 1; i < root.children.size(); i++){
+                if(root.children.get(i).minimaxValue < bestVal){
+                    bestChild = i;
+                }
             }
         }
 
+
         //compare child board to current board to determine move
-
+        move = board.compareBoard(root.children.get(bestChild).gameBoard.gameBoard);
         //make the move
+        board.tryPlacePiece(move[0], move[1], playerNum);
 
 
-//        System.out.printf("Best move = %d\n", bestNode.minimaxValue);
-
-
+        System.out.printf("%d, %d\n", move[0], move[1]);
         System.out.printf("Nodes expanded = %d\n", nodesExpanded);
 
     }

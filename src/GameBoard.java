@@ -4,7 +4,7 @@ public class GameBoard {
     private static final char X = 'X';
     private static final char O = 'O';
     private static final char EMPTY = ' ';
-    private char[][] gameBoard = {{EMPTY,EMPTY,EMPTY}
+    public char[][] gameBoard = {{EMPTY,EMPTY,EMPTY}
                                  ,{EMPTY,EMPTY,EMPTY}
                                  ,{EMPTY,EMPTY,EMPTY}};
 
@@ -109,7 +109,7 @@ public class GameBoard {
         //Returns higher numbers if player 1 is at an advantage
         //or lower numbers if player 2 is at an advantage
         // utilizes a heuristic function to determine who has the advantage
-        int result = 0;
+        int result;
         int row1 = 0;
         int row2 = 0;
         int row3 = 0;
@@ -121,6 +121,46 @@ public class GameBoard {
         int numEmpty = 0;
         int numX = 0;
         int numO = 0;
+
+        //apply the best value if the board has a win
+        // diagonal win cases
+        if(gameBoard[0][0] == 'X' & gameBoard[1][1] == 'X' & gameBoard[2][2] == 'X'){
+            evalValue = Integer.MAX_VALUE;
+            return;
+        }
+        if(gameBoard[0][0] == 'O' & gameBoard[1][1] == 'O' & gameBoard[2][2] == 'O'){
+            evalValue = Integer.MIN_VALUE;
+            return;
+        }
+        if(gameBoard[0][2] == 'X' & gameBoard[1][1] == 'X' & gameBoard[2][0] == 'X'){
+            evalValue = Integer.MAX_VALUE;
+            return;
+        }
+        if(gameBoard[0][2] == 'O' & gameBoard[1][1] == 'O' & gameBoard[2][0] == 'O'){
+            evalValue = Integer.MIN_VALUE;
+            return;
+        }
+
+        //row and column win cases
+        for (int i = 0; i <= 2; i++){
+            if(gameBoard[i][0] == 'X' & gameBoard[i][1] == 'X' & gameBoard[i][2] == 'X'){
+                evalValue = Integer.MAX_VALUE;
+                return;
+            }
+            if(gameBoard[i][0] == 'O' & gameBoard[i][1] == 'O' & gameBoard[i][2] == 'O'){
+                evalValue = Integer.MIN_VALUE;
+                return;
+            }
+            if(gameBoard[0][i] == 'X' & gameBoard[1][i] == 'X' & gameBoard[2][i] == 'X'){
+                evalValue = Integer.MAX_VALUE;
+                return;
+            }
+            if(gameBoard[0][i] == 'O' & gameBoard[1][i] == 'O' & gameBoard[2][i] == 'O'){
+                evalValue = Integer.MIN_VALUE;
+                return;
+            }
+        }
+
 
         //calculate rows and columns
 
@@ -304,6 +344,22 @@ public class GameBoard {
             }
         }
         return newGameBoard;
+    }
+
+    public int[] compareBoard(char[][] otherBoard){
+        //compares provided board to current
+        //returns coordinates of first mismatch
+        int[] coords = new int[2];
+        for(int i = 0; i <= 2; i++){
+            for(int j = 0; j <= 2; j++){
+                if(gameBoard[i][j] != otherBoard[i][j]){
+                    coords[0] = i;
+                    coords[1] = j;
+                    break;
+                }
+            }
+        }
+        return coords;
     }
 
 }

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class GameTreeNode {
     public List<GameTreeNode> children = new ArrayList<>();;
-    private GameBoard gameBoard;
+    public GameBoard gameBoard;
     public int minimaxValue;
     private static final int MAX_DEPTH = 3;
     private static final char X = 'X';
@@ -28,7 +28,7 @@ public class GameTreeNode {
         for(int i = 0; i <= 2; i++){
             for(int j = 0; j <= 2; j++) {
                 if(gameBoard.getPosition(i, j) == EMPTY) {
-                    System.out.println("Creating first row of children");
+//                    System.out.println("Creating first row of children");
                     //clone the board
                     GameBoard childBoard = gameBoard.clone();
                     //make the move on the cloned board
