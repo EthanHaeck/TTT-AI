@@ -5,12 +5,6 @@ public class PlayGame {
     /*
     This should hold general game logic like prompting turns
     */
-    private static final char X = 'X';
-    private static final char O = 'O';
-    private static final char EMPTY = ' ';
-    private char[][] testBoard = {{EMPTY,O,EMPTY}
-                                 ,{EMPTY,X,O}
-                                 ,{EMPTY,EMPTY,X}};
 
     GameBoard board = new GameBoard();
     Scanner userInput = new Scanner(System.in);
@@ -86,15 +80,10 @@ public class PlayGame {
         }
 
         // Display game results (Win, Lose, Tie)
-        switch(gameStatus){
-            case 1:
-                System.out.println("\n---Player 1 Wins!!---\n");
-                break;
-            case 2:
-                System.out.println("\n---Player 2 Wins!!---\n");
-                break;
-            default:
-                System.out.println("\n---Tie Game!!---\n");
+        switch (gameStatus) {
+            case 1 -> System.out.println("\n---Player 1 Wins!!---\n");
+            case 2 -> System.out.println("\n---Player 2 Wins!!---\n");
+            default -> System.out.println("\n---Tie Game!!---\n");
         }
 
     }
