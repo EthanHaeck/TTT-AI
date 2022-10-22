@@ -19,8 +19,8 @@ public class PlayGame {
     /*
     handle the back and forth turns between players/AIs
     */
-        int currentPlayer = 1;
         int gameStatus = 0;
+        int round = 0;
 
         // HEURISTIC TEST
 //        System.out.println("----HEURISTIC TEST---");
@@ -58,8 +58,21 @@ public class PlayGame {
         }
         else{ //AI VS AI
             while(gameStatus == 0){
-                board.drawBoard();
-                AITurn(1);
+                //add randomness to the AI moves so the game doesn't always end in a draw
+                // just for the first move
+                if(round == 0){
+                    Random random = new Random();
+                    int randRow = random.nextInt(3);
+                    int randCol = random.nextInt(3);
+                    while(!board.tryPlacePiece(randRow, randCol, 1)){
+                        randRow = random.nextInt(3);
+                        randCol = random.nextInt(3);
+                    }
+                }
+                else{
+                    AITurn(1);
+                }
+
                 gameStatus = board.checkWin();
                 board.drawBoard();
                 if(gameStatus != 0){
@@ -67,6 +80,8 @@ public class PlayGame {
                 }
                 AITurn(2);
                 gameStatus = board.checkWin();
+                board.drawBoard();
+                round++;
             }
         }
 
@@ -111,13 +126,10 @@ public class PlayGame {
 
     private void AITurn(int playerNum){
         int nodesExpanded;
-        int selectedRow;
-        int selectedCol;
         int bestChild = 0;
         int bestVal;
         int[] move;
         GameTreeNode root;
-        GameTreeNode bestNode;
 
         System.out.printf("***Player %d's turn!***\n", playerNum);
 
@@ -159,13 +171,12 @@ public class PlayGame {
             }
         }
 
-
         //compare child board to current board to determine move
         move = board.compareBoard(root.children.get(bestChild).gameBoard.gameBoard);
         //make the move
         board.tryPlacePiece(move[0], move[1], playerNum);
 
-
+        //print move information
         System.out.printf("%d, %d\n", move[0], move[1]);
         System.out.printf("Nodes expanded = %d\n", nodesExpanded);
 

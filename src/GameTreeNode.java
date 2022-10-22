@@ -5,13 +5,8 @@ public class GameTreeNode {
     public GameBoard gameBoard;
     public int minimaxValue;
     private static final int MAX_DEPTH = 3;
-    private static final char X = 'X';
-    private static final char O = 'O';
     private static final char EMPTY = ' ';
 
-    //TODO:
-    // MiniMax function
-    // Function to build game tree
 
     public GameTreeNode(GameBoard root){
         this.gameBoard = root;
@@ -27,8 +22,7 @@ public class GameTreeNode {
         //create children for the parent node
         for(int i = 0; i <= 2; i++){
             for(int j = 0; j <= 2; j++) {
-                if(gameBoard.getPosition(i, j) == EMPTY) {
-//                    System.out.println("Creating first row of children");
+                if(gameBoard.gameBoard[i][j] == EMPTY) {
                     //clone the board
                     GameBoard childBoard = gameBoard.clone();
                     //make the move on the cloned board
@@ -48,8 +42,6 @@ public class GameTreeNode {
         }
 
         return nodesExpanded;
-
-
     }
 
     private int createChildren(int currentDepth, int playerNum){
@@ -77,8 +69,7 @@ public class GameTreeNode {
         //look for an open position to play
         for(int i = 0; i <= 2; i++){
             for(int j = 0; j <= 2; j++){
-                if(gameBoard.getPosition(i, j) == EMPTY){
-//                    System.out.printf("Creating row %d of children\n", currentDepth);
+                if(gameBoard.gameBoard[i][j] == EMPTY){
                     //clone the board
                     GameBoard childBoard = gameBoard.clone();
                     //make the move on the cloned board
@@ -90,15 +81,12 @@ public class GameTreeNode {
 
                     //recursive call to make more children
                     expandedNodes += childNode.createChildren(currentDepth+1, nextPlayerNum);
-
-
                 }
             }
         }
 
         //return a value to show nodes expanded
         return expandedNodes;
-
     }
 
 
@@ -115,7 +103,6 @@ public class GameTreeNode {
             minimaxValue = gameBoard.evalValue;
             return bestNode;
         }
-
 
         if(max){ //finding highest value
             bestVal = Integer.MIN_VALUE;

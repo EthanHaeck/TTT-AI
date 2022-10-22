@@ -11,8 +11,7 @@ public class GameBoard {
     public int evalValue = 0;
 
     //TODO:
-    // Create Function to Clone Board
-
+    // maybe fix evaluate
 
     public boolean tryPlacePiece(int row, int col, int playerNum){
         /*
@@ -329,10 +328,6 @@ public class GameBoard {
         //set local gameBoard value
         evalValue = result;
 
-    }
-
-    public char getPosition(int row, int col){
-        return gameBoard[row][col];
     }
 
     public GameBoard clone(){
