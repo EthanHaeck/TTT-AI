@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class GameTreeNode {
-    public List<GameTreeNode> children = new ArrayList<>();;
+    public List<GameTreeNode> children = new ArrayList<>();
     public GameBoard gameBoard;
     public int minimaxValue;
     private static final int MAX_DEPTH = 3;
