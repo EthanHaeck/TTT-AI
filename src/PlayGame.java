@@ -34,8 +34,6 @@ public class PlayGame {
             whoGoesFirst = random.nextInt(2);
 
             while(gameStatus == 0){
-                board.evaluate();
-                System.out.printf("\nEval = %d\n\n", board.evalValue);
 
                 if(whoGoesFirst == 0){ //human player goes first
                     playerTurn(1);
@@ -55,6 +53,7 @@ public class PlayGame {
                     }
                     playerTurn(2);
                 }
+
                 gameStatus = board.checkWin();
                 board.drawBoard();
 
@@ -142,18 +141,6 @@ public class PlayGame {
 
         System.out.printf("***Player %d's turn!***\n", playerNum);
 
-        // TEMPORARY - JUST FOR TESTING
-//        Random random = new Random();
-//        selectedRow = random.nextInt(3);
-//        selectedCol = random.nextInt(3);
-//        while(!board.tryPlacePiece(selectedRow, selectedCol, playerNum)){
-//            selectedRow = random.nextInt(3);
-//            selectedCol = random.nextInt(3);
-//        }
-        //print the move
-//        System.out.printf("%d, %d\n", selectedRow, selectedCol);
-        // ^^^ JUST FOR TESTING ^^^
-
         //clone the board
         GameBoard copy = board.clone();
         root = new GameTreeNode(copy);
@@ -201,6 +188,4 @@ public class PlayGame {
         }
         return input;
     }
-
-
 }
