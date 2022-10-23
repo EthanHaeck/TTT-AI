@@ -109,17 +109,13 @@ public class GameBoard {
         //or lower numbers if player 2 is at an advantage
         // utilizes a heuristic function to determine who has the advantage
         int result;
-        int row1 = 0;
-        int row2 = 0;
-        int row3 = 0;
-        int col1 = 0;
-        int col2 = 0;
-        int col3 = 0;
-        int diag1 = 0;
-        int diag2 = 0;
-        int numEmpty = 0;
         int numX = 0;
         int numO = 0;
+
+        int oneX = 0;
+        int twoX = 0;
+        int oneO = 0;
+        int twoO = 0;
 
         //apply the best value if the board has a win
         // diagonal win cases
@@ -171,11 +167,22 @@ public class GameBoard {
                 numO++;
             }
         }
-        if(numX > 0 && numO == 0){
-            row1 = 1;
+
+        if(numO == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
-        else if(numO > 0 && numX == 0){
-            row1 = -1;
+        if(numX == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
 
         numX = 0;
@@ -189,11 +196,22 @@ public class GameBoard {
                 numO++;
             }
         }
-        if(numX > 0 && numO == 0){
-            row2 = 1;
+
+        if(numO == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
-        else if(numO > 0 && numX == 0){
-            row2 = -1;
+        if(numX == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
 
         numX = 0;
@@ -207,11 +225,22 @@ public class GameBoard {
                 numO++;
             }
         }
-        if(numX > 0 && numO == 0){
-            row3 = 1;
+
+        if(numO == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
-        else if(numO > 0 && numX == 0){
-            row3 = -1;
+        if(numX == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
 
         numX = 0;
@@ -225,11 +254,22 @@ public class GameBoard {
                 numO++;
             }
         }
-        if(numX > 0 && numO == 0){
-            col1 = 1;
+
+        if(numO == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
-        else if(numO > 0 && numX == 0){
-            col1 = -1;
+        if(numX == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
 
         numX = 0;
@@ -243,11 +283,22 @@ public class GameBoard {
                 numO++;
             }
         }
-        if(numX > 0 && numO == 0){
-            col2 = 1;
+
+        if(numO == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
-        else if(numO > 0 && numX == 0){
-            col2 = -1;
+        if(numX == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
 
         numX = 0;
@@ -261,11 +312,22 @@ public class GameBoard {
                 numO++;
             }
         }
-        if(numX > 0 && numO == 0){
-            col3 = 1;
+
+        if(numO == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
-        else if(numO > 0 && numX == 0){
-            col3 = -1;
+        if(numX == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
 
 
@@ -281,11 +343,22 @@ public class GameBoard {
                 numO++;
             }
         }
-        if(numX > 0 && numO == 0){
-            diag1 = 1;
+
+        if(numO == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
-        else if(numO > 0 && numX == 0){
-            diag1 = -1;
+        if(numX == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
 
 
@@ -313,15 +386,26 @@ public class GameBoard {
             numO++;
         }
 
-        if(numX > 0 && numO == 0){
-            diag2 = 1;
+
+        if(numO == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
-        else if(numO > 0 && numX == 0){
-            diag2 = -1;
+        if(numX == 0){
+            if(numX == 1){
+                oneX++;
+            }
+            if(numX == 2){
+                twoX++;
+            }
         }
 
-        //heurisitc
-        result = row1 + row2 + row3 + col1 + col2 + col3 + diag1 + diag2;
+        //heuristic
+        result = 3*twoX + oneX - (3*twoO + oneO);
 
         //set local gameBoard value
         evalValue = result;
