@@ -16,18 +16,13 @@ public class PlayGame {
         int gameStatus = 0;
         int round = 0;
 
-        // HEURISTIC TEST
-//        System.out.println("----HEURISTIC TEST---");
-//        board.evaluate(testBoard);
-//        System.out.printf("Eval = %d\n\n", board.evalValue);
-
         System.out.print("Select the AIs opponent:\n[1] Human\n[2] AI\n==> ");
-        int opponentChoice = userInput.nextInt();
+        String input = userInput.nextLine();
+        int opponentChoice = Integer.parseInt(validateInput(input));
 
         //input validation
         while(opponentChoice < 1 || opponentChoice > 2){
-            System.out.print("Enter a valid number: ");
-            opponentChoice = userInput.nextInt();
+            opponentChoice = Integer.parseInt(validateInput(input));
         }
 
         //Handle different opponent choices
@@ -94,21 +89,31 @@ public class PlayGame {
         */
         int selectedRow;
         int selectedCol;
+        String input;
 
         System.out.println("***Player 1's turn!***");
         System.out.print("Enter row [0 to 2]: ");
-        selectedRow = userInput.nextInt();
-        System.out.print("Enter col [0 to 2]: ");
-        selectedCol = userInput.nextInt();
+        //input validation
+        input = userInput.nextLine();
+        selectedRow = Integer.parseInt(validateInput(input));
 
-        // --- OPTIMIZE LATER ---
+        System.out.print("Enter col [0 to 2]: ");
+        //input validation
+        input = userInput.nextLine();
+        selectedCol = Integer.parseInt(validateInput(input));
+
         // check validity and check move
         while(!board.tryPlacePiece(selectedRow, selectedCol, 1)){
             System.out.println("---Move is invalid, try again!---");
             System.out.print("Enter row [0 to 2]: ");
-            selectedRow = userInput.nextInt();
+            //input validation
+            input = userInput.nextLine();
+            selectedRow = Integer.parseInt(validateInput(input));
+
             System.out.print("Enter col [0 to 2]: ");
-            selectedCol = userInput.nextInt();
+            //input validation
+            input = userInput.nextLine();
+            selectedCol = Integer.parseInt(validateInput(input));
         }
 
     }
@@ -170,5 +175,17 @@ public class PlayGame {
         System.out.printf("Nodes expanded = %d\n", nodesExpanded);
 
     }
+
+    private String validateInput(String input){
+        //prompt user until input is an integer
+        Scanner validate = new Scanner(input);
+        while(!validate.hasNextInt()){
+            System.out.print("Enter a valid input: ");
+            input = userInput.nextLine();
+            validate = new Scanner(input);
+        }
+        return input;
+    }
+
 
 }
