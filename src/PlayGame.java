@@ -15,6 +15,7 @@ public class PlayGame {
     */
         int gameStatus = 0;
         int round = 0;
+        int whoGoesFirst;
 
         System.out.print("Select the AIs opponent:\n[1] Human\n[2] AI\n==> ");
         String input = userInput.nextLine();
@@ -29,20 +30,34 @@ public class PlayGame {
         if(opponentChoice == 1){ // PLAYER VS AI
             // loop until the win condition is reached, alternating turns
             board.drawBoard();
-            while(gameStatus == 0){
+            Random random = new Random();
+            whoGoesFirst = random.nextInt(2);
 
+            while(gameStatus == 0){
                 board.evaluate();
                 System.out.printf("\nEval = %d\n\n", board.evalValue);
 
-                playerTurn();
-                gameStatus = board.checkWin();
-                board.drawBoard();
-                if(gameStatus != 0){
-                    break;
+                if(whoGoesFirst == 0){ //human player goes first
+                    playerTurn(1);
+                    gameStatus = board.checkWin();
+                    board.drawBoard();
+                    if(gameStatus != 0){
+                        break;
+                    }
+                    AITurn(2);
                 }
-                AITurn(2);
+                else{ //AI goes first
+                    AITurn(1);
+                    gameStatus = board.checkWin();
+                    board.drawBoard();
+                    if(gameStatus != 0){
+                        break;
+                    }
+                    playerTurn(2);
+                }
                 gameStatus = board.checkWin();
                 board.drawBoard();
+
             }
         }
         else{ //AI VS AI
@@ -83,7 +98,7 @@ public class PlayGame {
 
     }
 
-    private void playerTurn(){
+    private void playerTurn(int playerNum){
         /*
         handles logic of a player's turn (placing X/O, checking validity of move)
         */
@@ -91,7 +106,7 @@ public class PlayGame {
         int selectedCol;
         String input;
 
-        System.out.println("***Player 1's turn!***");
+        System.out.printf("***Player %d's turn!***\n", playerNum);
         System.out.print("Enter row [0 to 2]: ");
         //input validation
         input = userInput.nextLine();
@@ -103,7 +118,7 @@ public class PlayGame {
         selectedCol = Integer.parseInt(validateInput(input));
 
         // check validity and check move
-        while(!board.tryPlacePiece(selectedRow, selectedCol, 1)){
+        while(!board.tryPlacePiece(selectedRow, selectedCol, playerNum)){
             System.out.println("---Move is invalid, try again!---");
             System.out.print("Enter row [0 to 2]: ");
             //input validation
