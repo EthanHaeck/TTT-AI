@@ -10,9 +10,6 @@ public class GameBoard {
 
     public int evalValue = 0;
 
-    //TODO:
-    // maybe fix evaluate
-
     public boolean tryPlacePiece(int row, int col, int playerNum){
         /*
         checks that the given coords are inbounds and not already occupied
@@ -42,8 +39,7 @@ public class GameBoard {
             return true;
         }
     }
-
-
+    
     public int checkWin(){
         // NO WIN = 0
         // P1 WINS = 1

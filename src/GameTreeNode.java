@@ -89,7 +89,6 @@ public class GameTreeNode {
         return expandedNodes;
     }
 
-
     public GameTreeNode runMiniMax(boolean max) {
         //Runs MINIMAX on the game tree rooted at this node
         //max is true if the MAX result is desired
