@@ -160,7 +160,6 @@ public class GameBoard {
             }
         }
 
-
         //calculate rows and columns
 
         //---row1---
@@ -320,7 +319,6 @@ public class GameBoard {
         else if(numO > 0 && numX == 0){
             diag2 = -1;
         }
-
 
         //heurisitc
         result = row1 + row2 + row3 + col1 + col2 + col3 + diag1 + diag2;
